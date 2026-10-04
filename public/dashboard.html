@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+       <link rel="stylesheet" href="extra.css">
+</head>
+
+<body class="app-body">
+
+      <aside class="sidebar" id="sidebar"></aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+
+                <span class="page-location">
+                    Workspace / Dashboard
+                </span>
+
+                <h2>Teacher Dashboard</h2>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button class="icon-btn">
+                    🔔
+                </button>
+
+                <div class="profile">
+
+                      <div class="avatar" id="avatar">
+       PS
+   </div>
+
+                    <div>
+
+                           <strong id="userName">
+       Prince Singh
+   </strong>
+                        <span>
+                            Teacher
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- DASHBOARD -->
+        <section class="dashboard-page">
+
+            <div class="welcome-row">
+
+                <div>
+
+                    <span class="eyebrow">
+                        SATURDAY • OCTOBER 3, 2026
+                    </span>
+
+                       <h1 id="greeting">
+       Good afternoon, Prince 👋
+   </h1>
+
+                    <p>
+                        Here's what's happening across your classes today.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="primary-btn compact"
+                    onclick="openAttendance()"
+                >
+                    + Open Attendance
+                </button>
+
+            </div>
+
+
+                       <!-- STAT CARDS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">▣</div>
+                    <div>
+                        <span>Active Classes</span>
+                        <strong id="statClasses">0</strong>
+                        <small id="statClassesNote">Loading...</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">✓</div>
+                    <div>
+                        <span>Today's Attendance</span>
+                        <strong id="statAttendance">--</strong>
+                        <small id="statAttendanceNote">Loading...</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">◫</div>
+                    <div>
+                        <span>Upcoming Exams</span>
+                        <strong id="statExams">0</strong>
+                        <small id="statExamsNote">Loading...</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">!</div>
+                    <div>
+                        <span>Security Alerts</span>
+                         <strong id="statAlerts">0</strong>
+  <small id="statAlertsNote">Loading...</small>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- LOWER CONTENT -->
+
+            <div class="dashboard-grid">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Your Classes</h3>
+                            <p>Attendance taken today</p>
+                        </div>
+                        <button class="text-btn" onclick="location.href='classes.html'">View all →</button>
+                    </div>
+
+                    <div class="class-list" id="todayClasses"></div>
+
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>Upcoming Exams</h3>
+                            <p>Scheduled assessments</p>
+                        </div>
+                        <button class="text-btn" onclick="location.href='exams.html'">View all →</button>
+                    </div>
+
+                    <div id="upcomingExams"></div>
+
+                </div>
+
+            </div>
+
+            <!-- SECURITY -->
+
+            <div class="panel security-panel">
+
+                <div class="security-content">
+
+                    <div class="security-symbol">
+                        🛡️
+                    </div>
+
+                    <div>
+
+                           <span class="eyebrow" id="todayLabel">
+                            SECURITY CENTER
+                        </span>
+
+                        <h3>
+                            Examination environment status
+                        </h3>
+
+                        <p>
+                            Authentication, sessions and
+                            suspicious examination activity
+                            are monitored.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="security-status">
+
+                    <span class="status-dot"></span>
+
+                    System protected
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+     <script src="script.js"></script>
+   <script src="sidebar.js"></script>
+   <script src="dashboard.js"></script>
+
+</body>
+
+</html>

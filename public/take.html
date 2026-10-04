@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | Exam</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="extra.css">
+
+    <style>
+        .take-wrap { max-width: 820px; margin: 0 auto; padding: 20px; user-select: none; -webkit-user-select: none; }
+        .take-top {
+            display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            padding-bottom: 14px; margin-bottom: 16px; border-bottom: 1px solid rgba(128, 128, 128, 0.35);
+        }
+        .take-sub { font-size: 14px; opacity: 0.7; margin-top: 4px; }
+        .take-timer {
+            font-size: 28px; font-weight: bold; font-family: monospace;
+            padding: 8px 16px; border-radius: 12px; border: 1px solid rgba(128, 128, 128, 0.45);
+        }
+        .take-timer.urgent { color: #d93025; border-color: #d93025; }
+        .take-card { margin-bottom: 16px; }
+        .take-qhead { display: flex; gap: 8px; margin-bottom: 12px; }
+        .take-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+        .option-btn {
+            display: block; width: 100%; text-align: left; padding: 14px 16px; margin: 10px 0;
+            border-radius: 12px; border: 1px solid rgba(128, 128, 128, 0.45);
+            background: transparent; color: inherit; font: inherit; cursor: pointer;
+        }
+        .option-btn.chosen { border-color: #1e8e3e; background: rgba(30, 142, 62, 0.15); font-weight: bold; }
+        .nav-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+        .nav-dot {
+            width: 40px; height: 40px; border-radius: 8px; cursor: pointer; font: inherit; color: inherit;
+            border: 1px solid rgba(128, 128, 128, 0.45); background: transparent;
+        }
+        .nav-dot.answered { background: rgba(30, 142, 62, 0.25); }
+        .nav-dot.current { outline: 2px solid #1a73e8; }
+        .back-link { display: inline-block; margin: 8px 0 16px; color: inherit; }
+        .rules { line-height: 1.8; margin: 12px 0 20px 18px; padding: 0; }
+
+        .overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000; padding: 20px;
+            background: rgba(0, 0, 0, 0.78); display: flex; align-items: center; justify-content: center;
+        }
+        .overlay-box {
+            width: 100%; max-width: 460px; padding: 26px; border-radius: 16px;
+            background: #ffffff; color: #17201e;
+        }
+        .overlay-box h3 { margin: 0 0 10px; }
+        .overlay-box p { margin: 0 0 6px; line-height: 1.6; }
+    </style>
+</head>
+
+<body>
+
+    <div class="take-wrap">
+
+        <header class="take-top">
+
+            <div>
+                <strong id="examTitle">Exam</strong>
+                <div class="take-sub" id="progressText"></div>
+            </div>
+
+            <div class="take-timer" id="timer" hidden>--:--</div>
+
+        </header>
+
+        <p id="formMessage" class="form-message"></p>
+
+        <a class="back-link" id="backLink" href="myexams.html" hidden>← Back to My Exams</a>
+
+        <section id="introArea" class="panel take-card" hidden>
+
+            <h2>Before you begin</h2>
+
+            <ul class="rules">
+                <li>The timer starts as soon as you begin and cannot be paused.</li>
+                <li>The exam opens in full screen. Stay on this page and in full screen.</li>
+                <li>Switching tabs, leaving the window or leaving full screen is recorded and counts as a warning.</li>
+                <li>After 3 warnings your exam is submitted automatically.</li>
+                <li>Copy, paste and right-click are disabled.</li>
+                <li>Answers are saved as you click. If the page reloads, you continue where you stopped.</li>
+            </ul>
+
+            <button class="primary-btn compact" id="beginBtn">I understand, begin the exam</button>
+
+        </section>
+
+        <main id="examArea" hidden>
+
+            <div class="panel take-card">
+
+                <div class="take-qhead">
+                    <span id="qNumber" class="pill"></span>
+                    <span id="qMarks" class="pill"></span>
+                </div>
+
+                <h3 id="qText"></h3>
+
+                <div id="options"></div>
+
+                <div class="take-actions">
+                    <button class="outline-btn" id="prevBtn">← Previous</button>
+                    <button class="outline-btn" id="clearBtn">Clear answer</button>
+                    <button class="outline-btn" id="nextBtn">Next →</button>
+                </div>
+
+            </div>
+
+            <div class="panel take-card">
+                <div class="nav-grid" id="navGrid"></div>
+                <button class="primary-btn compact" id="submitBtn">Submit exam</button>
+            </div>
+
+        </main>
+
+        <section id="resultArea" class="panel take-card" style="text-align:center;" hidden>
+            <h2 id="resultTitle">Exam submitted</h2>
+            <p id="resultNote"></p>
+            <p id="resultText" style="font-size:20px; font-weight:bold;"></p>
+            <a class="outline-btn" href="myexams.html" style="display:inline-block; text-decoration:none;">Back to My Exams</a>
+        </section>
+
+    </div>
+
+    <div class="overlay" id="overlay" hidden>
+        <div class="overlay-box">
+            <h3 id="overlayTitle"></h3>
+            <p id="overlayText"></p>
+            <div class="take-actions" id="overlayButtons"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="take.js"></script>
+
+</body>
+
+</html>

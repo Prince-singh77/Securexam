@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | Attendance</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7f6;
+            color: #17201e;
+        }
+
+        /* HEADER */
+
+        .attendance-header {
+            background: #173f36;
+            color: white;
+            padding: 28px 5%;
+            border-bottom: 4px solid #f7d343;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header-title p {
+            margin: 8px 0 0;
+            color: #d7e4df;
+        }
+
+        .back-btn {
+            border: 1px solid rgba(255,255,255,0.35);
+            background: transparent;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+
+        /* MAIN */
+
+        .attendance-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+
+        /* GRID */
+
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 22px;
+        }
+
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 30px rgba(20, 50, 40, 0.08);
+            border: 1px solid #e5ebe8;
+        }
+
+        .card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+
+        /* BADGES */
+
+        .badge {
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge-open {
+            background: #e4f5ec;
+            color: #16754f;
+        }
+
+        .badge-closed {
+            background: #fde7e4;
+            color: #a73527;
+        }
+
+
+        /* FORM FIELDS */
+
+        .field {
+            margin-bottom: 14px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #5b6964;
+            margin-bottom: 6px;
+        }
+
+        .field select {
+            width: 100%;
+            padding: 11px 12px;
+            border-radius: 10px;
+            border: 1px solid #ccd7d2;
+            background: white;
+            color: #17201e;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .field select:disabled {
+            background: #f2f5f3;
+            color: #8a9792;
+        }
+
+
+        /* QR */
+
+        .qr-container {
+            border: 2px solid #dfe7e3;
+            border-radius: 15px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        #qrcode {
+            width: 250px;
+            height: 250px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #qrcode img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .qr-timer {
+            margin-top: 14px;
+            color: #5b6964;
+            font-size: 14px;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: #173f36;
+        }
+
+
+        /* PROGRESS */
+
+        .progress {
+            width: 100%;
+            height: 7px;
+            background: #e2e8e5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #229363;
+            transition: width 0.4s linear;
+        }
+
+
+        /* BUTTONS */
+
+        button {
+            font-family: inherit;
+        }
+
+        .primary-btn {
+            width: 100%;
+            border: none;
+            background: #f6cf3e;
+            color: #17201e;
+            padding: 14px;
+            border-radius: 11px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+
+        .primary-btn:hover {
+            background: #e9c22e;
+        }
+
+        .primary-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .danger-btn {
+            width: 100%;
+            border: none;
+            background: #c94734;
+            color: white;
+            padding: 14px;
+            border-radius: 11px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+
+        .danger-btn:hover {
+            background: #b43b2b;
+        }
+
+
+        /* CLASS LIST */
+
+        .class-summary {
+            color: #596863;
+            font-size: 14px;
+        }
+
+        .student-row {
+            display: grid;
+            grid-template-columns: 48px 1fr auto auto;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 0;
+            border-top: 1px solid #e4e9e7;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #f2f5f3;
+            border: 2px solid #dce5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #21483e;
+        }
+
+        .student-name {
+            font-weight: bold;
+        }
+
+        .student-course {
+            display: block;
+            color: #71807b;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        .empty-note {
+            padding: 28px 0 10px;
+            color: #71807b;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+
+        /* STATUS */
+
+        .status {
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .present {
+            background: #e2f3eb;
+            color: #14734e;
+        }
+
+        .absent {
+            background: #fde6e3;
+            color: #a53527;
+        }
+
+
+        /* ACTION BUTTONS */
+
+        .action-btn {
+            padding: 9px 14px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+            background: white;
+        }
+
+        .mark-absent {
+            border: 1px solid #e9a79b;
+            color: #c54636;
+        }
+
+        .mark-present {
+            border: none;
+            background: #173f36;
+            color: white;
+        }
+
+
+        /* INFO */
+
+        .security-info {
+            margin-top: 22px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f0f6f3;
+            color: #40554d;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .note {
+            margin: 14px 0 0;
+            font-size: 13px;
+            color: #5b6964;
+            min-height: 18px;
+        }
+
+        .note.error {
+            color: #a73527;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            .attendance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .student-row {
+                grid-template-columns: 45px 1fr;
+            }
+
+            .student-row .status,
+            .student-row .action-btn {
+                grid-column: 2;
+                width: fit-content;
+            }
+
+            .header-top {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="attendance-header">
+
+        <div class="header-top">
+
+            <div class="header-title">
+
+                <h1>Today's Attendance</h1>
+
+                <p id="todayDate"></p>
+
+            </div>
+
+            <button
+                class="back-btn"
+                onclick="location.href='dashboard.html'"
+            >
+                ← Dashboard
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="attendance-container">
+
+        <div class="attendance-grid">
+
+
+            <!-- QR CARD -->
+
+            <section class="card">
+
+                <div class="card-title">
+
+                    <h2>Student check-in</h2>
+
+                    <span
+                        id="attendanceStatus"
+                        class="badge badge-closed"
+                    >
+                        ● Closed
+                    </span>
+
+                </div>
+
+
+                <div class="field">
+                    <label for="classSelect">Class</label>
+                    <select id="classSelect" onchange="onClassChange()"></select>
+                </div>
+
+                <div class="field">
+                    <label for="durationSelect">Open for</label>
+                    <select id="durationSelect">
+                        <option value="5">5 minutes</option>
+                        <option value="10">10 minutes</option>
+                        <option value="15" selected>15 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="60">60 minutes</option>
+                    </select>
+                </div>
+
+
+                <div id="closedMessage">
+
+                    <p id="closedText" style="color:#66736e; line-height:1.6;">
+                        Attendance is closed.
+                        Choose a class and open it to display
+                        the dynamic QR code for students.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="qrSection"
+                    style="display:none;"
+                >
+
+                    <div class="qr-container">
+
+                        <div id="qrcode">
+                            <img id="qrImage" alt="Attendance QR code">
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                id="qrProgress"
+                                class="progress-bar"
+                            ></div>
+
+                        </div>
+
+                        <div class="qr-timer">
+
+                            New code in
+                            <span
+                                id="timer"
+                                class="timer"
+                            >
+                                --
+                            </span>
+                            seconds.
+
+                        </div>
+
+                        <div class="qr-timer">
+
+                            Attendance closes in
+                            <span
+                                id="sessionLeft"
+                                class="timer"
+                            >
+                                --:--
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="security-info">
+
+                        🔐 <strong>Secure QR</strong><br>
+
+                        The QR code changes every
+                        <span id="rotateInfo">15</span> seconds.
+                        Each student can check in only once
+                        during the attendance session.
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="openBtn"
+                    class="primary-btn"
+                    onclick="startSession()"
+                >
+                    Open attendance
+                </button>
+
+
+                <button
+                    id="closeBtn"
+                    class="danger-btn"
+                    style="display:none;"
+                    onclick="closeSession()"
+                >
+                    Close attendance
+                </button>
+
+                <p id="pageNote" class="note"></p>
+
+            </section>
+
+
+
+            <!-- CLASS LIST -->
+
+            <section class="card">
+
+                <div class="card-title">
+
+                    <div>
+
+                        <h2>Class list</h2>
+
+                        <span
+                            id="summary"
+                            class="class-summary"
+                        >
+                            Attendance not started
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        id="attendanceProgress"
+                        class="progress-bar"
+                    ></div>
+
+                </div>
+
+
+                <div id="studentList"></div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+
+    <script>
+
+        // ===============================
+        // STATE
+        // ===============================
+
+        let currentSession = null;
+        let isOpen = false;
+        let sessionEndsAt = 0;
+        let rotateMs = 15000;
+        let nextRefreshAt = 0;
+        let fetchingQR = false;
+        let tickInterval = null;
+        let pollInterval = null;
+        let lastRenderKey = "";
+
+        const DEFAULT_CLOSED_TEXT =
+            "Attendance is closed. Choose a class and open it to display the dynamic QR code for students.";
+
+
+        // ===============================
+        // SMALL HELPERS
+        // ===============================
+
+        function el(tag, className, text) {
+            const node = document.createElement(tag);
+            if (className) node.className = className;
+            if (text !== undefined) node.textContent = text;
+            return node;
+        }
+
+        function initials(name) {
+            return name
+                .split(" ")
+                .filter(Boolean)
+                .map((word) => word[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+        }
+
+        function formatLeft(ms) {
+            const total = Math.max(0, Math.floor(ms / 1000));
+            const minutes = Math.floor(total / 60);
+            const seconds = total % 60;
+            return minutes + ":" + String(seconds).padStart(2, "0");
+        }
+
+        function setNote(text, isError) {
+            const note = document.getElementById("pageNote");
+            note.textContent = text || "";
+            note.className = "note" + (isError ? " error" : "");
+        }
+
+
+        // ===============================
+        // OPEN / CLOSED SCREEN STATES
+        // ===============================
+
+        function enterOpenState(session) {
+
+            currentSession = session;
+            sessionEndsAt = new Date(session.endsAt).getTime();
+            rotateMs = (session.rotateSeconds || 15) * 1000;
+            nextRefreshAt = 0;
+            isOpen = true;
+
+            const badge = document.getElementById("attendanceStatus");
+            badge.textContent = "● Open";
+            badge.className = "badge badge-open";
+
+            document.getElementById("rotateInfo").textContent = session.rotateSeconds || 15;
+            document.getElementById("closedMessage").style.display = "none";
+            document.getElementById("qrSection").style.display = "block";
+            document.getElementById("openBtn").style.display = "none";
+            document.getElementById("closeBtn").style.display = "block";
+            document.getElementById("classSelect").disabled = true;
+            document.getElementById("durationSelect").disabled = true;
+
+            setNote("");
+
+            clearInterval(tickInterval);
+            clearInterval(pollInterval);
+
+            fetchQR();
+            tickInterval = setInterval(tick, 500);
+            pollInterval = setInterval(refreshRecords, 3000);
+            refreshRecords();
+        }
+
+
+        function leaveOpenState(message) {
+
+            clearInterval(tickInterval);
+            clearInterval(pollInterval);
+
+            isOpen = false;
+
+            const badge = document.getElementById("attendanceStatus");
+            badge.textContent = "● Closed";
+            badge.className = "badge badge-closed";
+
+            document.getElementById("closedText").textContent = message || DEFAULT_CLOSED_TEXT;
+            document.getElementById("qrSection").style.display = "none";
+            document.getElementById("closedMessage").style.display = "block";
+            document.getElementById("openBtn").style.display = "block";
+            document.getElementById("closeBtn").style.display = "none";
+            document.getElementById("classSelect").disabled = false;
+            document.getElementById("durationSelect").disabled = false;
+            document.getElementById("qrImage").removeAttribute("src");
+        }
+
+
+        function showIdleList() {
+
+            currentSession = null;
+            lastRenderKey = "";
+
+            document.getElementById("summary").textContent = "Attendance not started";
+            document.getElementById("attendanceProgress").style.width = "0%";
+
+            const list = document.getElementById("studentList");
+            list.replaceChildren();
+            list.appendChild(el(
+                "p",
+                "empty-note",
+                "Open attendance to begin. Students who scan the QR code appear here within seconds, and you can also mark anyone by hand."
+            ));
+        }
+
+
+        // ===============================
+        // THE QR CODE
+        // ===============================
+
+        async function fetchQR() {
+
+            if (fetchingQR || !currentSession) return;
+
+            fetchingQR = true;
+
+            try {
+
+                const data = await apiFetch(
+                    "/api/attendance/sessions/" + currentSession.id + "/qr"
+                );
+
+                if (!data.success) {
+                    leaveOpenState(data.message || "This attendance session has ended.");
+                    refreshRecords();
+                    return;
+                }
+
+                document.getElementById("qrImage").src = data.qr;
+                nextRefreshAt = Date.now() + data.nextRefreshMs + 150;
+                setNote("");
+
+            } catch (error) {
+                nextRefreshAt = Date.now() + 2000;
+                setNote("Connection problem. Retrying...", true);
+
+            } finally {
+                fetchingQR = false;
+            }
+        }
+
+
+        function tick() {
+
+            const now = Date.now();
+
+            if (now >= sessionEndsAt) {
+                leaveOpenState("The attendance time is over. You can still correct the list on the right.");
+                refreshRecords();
+                return;
+            }
+
+            document.getElementById("sessionLeft").textContent = formatLeft(sessionEndsAt - now);
+
+            if (!nextRefreshAt) return;
+
+            const left = nextRefreshAt - now;
+
+            document.getElementById("timer").textContent = Math.max(0, Math.ceil(left / 1000));
+
+            const percent = Math.max(0, Math.min(100, (left / rotateMs) * 100));
+            document.getElementById("qrProgress").style.width = percent + "%";
+
+            if (left <= 0) {
+                fetchQR();
+            }
+        }
+
+
+        // ===============================
+        // THE STUDENT LIST
+        // ===============================
+
+        function renderStudents(data) {
+
+            const list = document.getElementById("studentList");
+            list.replaceChildren();
+
+            const everyone = [
+                ...data.present.map((s) => ({ ...s, isPresent: true })),
+                ...data.absent.map((s) => ({ ...s, isPresent: false }))
+            ].sort((a, b) => a.name.localeCompare(b.name));
+
+            if (everyone.length === 0) {
+                list.appendChild(el(
+                    "p",
+                    "empty-note",
+                    "No students have joined this class yet. Share the join code from My Classes."
+                ));
+                return;
+            }
+
+            everyone.forEach((student) => {
+
+                const row = el("div", "student-row");
+
+                row.appendChild(el("div", "avatar", initials(student.name)));
+
+                const info = el("div");
+                info.appendChild(el("span", "student-name", student.name));
+
+                let sub = student.email;
+                if (student.isPresent && student.method === "manual") {
+                    sub += " • marked by teacher";
+                }
+                info.appendChild(el("span", "student-course", sub));
+                row.appendChild(info);
+
+                row.appendChild(el(
+                    "span",
+                    "status " + (student.isPresent ? "present" : "absent"),
+                    student.isPresent ? "● Present" : "● Absent"
+                ));
+
+                const button = el(
+                    "button",
+                    "action-btn " + (student.isPresent ? "mark-absent" : "mark-present"),
+                    student.isPresent ? "Mark absent" : "Mark present"
+                );
+                button.addEventListener("click", () => setManual(student.id, !student.isPresent));
+                row.appendChild(button);
+
+                list.appendChild(row);
+            });
+        }
+
+
+        async function refreshRecords() {
+
+            if (!currentSession) return;
+
+            try {
+
+                const data = await apiFetch(
+                    "/api/attendance/sessions/" + currentSession.id + "/records"
+                );
+
+                if (!data.success) return;
+
+                const key = JSON.stringify([
+                    data.present.map((p) => [p.id, p.method]),
+                    data.absent.map((a) => a.id)
+                ]);
+
+                if (key !== lastRenderKey) {
+                    lastRenderKey = key;
+                    renderStudents(data);
+                }
+
+                document.getElementById("summary").textContent =
+                    data.presentCount + " of " + data.total + " present";
+
+                document.getElementById("attendanceProgress").style.width =
+                    (data.total ? (data.presentCount / data.total) * 100 : 0) + "%";
+
+            } catch (error) {
+                // the next refresh will try again
+            }
+        }
+
+
+        async function setManual(studentId, present) {
+
+            if (!currentSession) return;
+
+            try {
+
+                const data = await apiFetch(
+                    "/api/attendance/sessions/" + currentSession.id + "/manual",
+                    {
+                        method: "POST",
+                        body: JSON.stringify({ studentId: studentId, present: present })
+                    }
+                );
+
+                if (!data.success) {
+                    setNote(data.message || "Could not update the student.", true);
+                    return;
+                }
+
+                setNote("");
+                refreshRecords();
+
+            } catch (error) {
+                setNote("Cannot reach the server.", true);
+            }
+        }
+
+
+        // ===============================
+        // BUTTONS
+        // ===============================
+
+        async function startSession() {
+
+            const classId = document.getElementById("classSelect").value;
+
+            if (!classId) {
+                setNote("Please select a class first.", true);
+                return;
+            }
+
+            const minutes = Number(document.getElementById("durationSelect").value);
+            const openButton = document.getElementById("openBtn");
+
+            openButton.disabled = true;
+
+            try {
+
+                const data = await apiFetch("/api/attendance/sessions", {
+                    method: "POST",
+                    body: JSON.stringify({ classId: classId, minutes: minutes })
+                });
+
+                if (!data.success) {
+                    setNote(data.message || "Could not open attendance.", true);
+                    return;
+                }
+
+                lastRenderKey = "";
+                enterOpenState(data.session);
+
+            } catch (error) {
+                setNote("Cannot reach the server.", true);
+
+            } finally {
+                openButton.disabled = false;
+            }
+        }
+
+
+        async function closeSession() {
+
+            if (!currentSession) return;
+
+            if (!confirm("Close attendance? Students will no longer be able to check in.")) {
+                return;
+            }
+
+            try {
+
+                const data = await apiFetch(
+                    "/api/attendance/sessions/" + currentSession.id + "/close",
+                    { method: "POST" }
+                );
+
+                if (!data.success) {
+                    setNote(data.message || "Could not close attendance.", true);
+                    return;
+                }
+
+                leaveOpenState("Attendance is closed. You can still correct the list on the right.");
+                refreshRecords();
+
+            } catch (error) {
+                setNote("Cannot reach the server.", true);
+            }
+        }
+
+
+        // ===============================
+        // CLASSES
+        // ===============================
+
+        async function loadActiveSession() {
+
+            const classId = document.getElementById("classSelect").value;
+
+            if (!classId) return;
+
+            try {
+
+                const data = await apiFetch(
+                    "/api/attendance/sessions/active/" + encodeURIComponent(classId)
+                );
+
+                if (data.success && data.session) {
+                    enterOpenState(data.session);
+                } else {
+                    showIdleList();
+                }
+
+            } catch (error) {
+                showIdleList();
+            }
+        }
+
+
+        function onClassChange() {
+            if (isOpen) return;
+            leaveOpenState();
+            showIdleList();
+            loadActiveSession();
+        }
+
+
+        async function loadClasses() {
+
+            const select = document.getElementById("classSelect");
+
+            try {
+
+                const data = await apiFetch("/api/classes");
+
+                if (!data.success) {
+                    setNote(data.message || "Could not load your classes.", true);
+                    return;
+                }
+
+                select.replaceChildren();
+
+                if (data.classes.length === 0) {
+                    const option = document.createElement("option");
+                    option.textContent = "No classes yet";
+                    select.appendChild(option);
+                    select.disabled = true;
+                    document.getElementById("openBtn").disabled = true;
+                    setNote("Create a class first from My Classes.", true);
+                    showIdleList();
+                    return;
+                }
+
+                data.classes.forEach((c) => {
+                    const count = (c.students || []).length;
+                    const option = document.createElement("option");
+                    option.value = c._id;
+                    option.textContent = c.name + " (" + count + (count === 1 ? " student)" : " students)");
+                    select.appendChild(option);
+                });
+
+                const wanted = new URLSearchParams(window.location.search).get("classId");
+
+                if (wanted && data.classes.some((c) => c._id === wanted)) {
+                    select.value = wanted;
+                }
+
+                showIdleList();
+                await loadActiveSession();
+
+            } catch (error) {
+                setNote("Cannot reach the server.", true);
+            }
+        }
+
+
+        // ===============================
+        // START
+        // ===============================
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const user = JSON.parse(localStorage.getItem("user") || "null");
+
+            if (!localStorage.getItem("token") || !user) {
+                return; // script.js sends them to the login page
+            }
+
+            if (user.role !== "teacher") {
+                window.location.href = "classes.html";
+                return;
+            }
+
+            document.getElementById("todayDate").textContent =
+                new Date().toLocaleDateString("en-IN", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                });
+
+            loadClasses();
+        });
+
+    </script>
+
+</body>
+
+</html>

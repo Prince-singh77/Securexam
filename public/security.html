@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | Security Reports</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="extra.css">
+</head>
+
+<body class="app-body">
+
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <span class="page-location">Insights / Security Reports</span>
+                <h2>Security Reports</h2>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="profile">
+                    <div class="avatar" id="avatar">--</div>
+                    <div>
+                        <strong id="userName">Loading...</strong>
+                        <span>Teacher</span>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <section class="dashboard-page stack">
+
+            <div class="panel">
+                <div class="toolbar">
+                    <select id="examSelect" onchange="loadReport()"></select>
+                </div>
+            </div>
+
+            <p id="formMessage" class="form-message"></p>
+
+            <div id="reportArea" class="stack" hidden>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">♙</div>
+                        <div>
+                            <span>Attempts</span>
+                            <strong id="sAttempts">0</strong>
+                            <small>Students who started</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">!</div>
+                        <div>
+                            <span>Flagged</span>
+                            <strong id="sFlagged">0</strong>
+                            <small>At least one warning</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">⏻</div>
+                        <div>
+                            <span>Auto-submitted</span>
+                            <strong id="sAuto">0</strong>
+                            <small>After 3 warnings</small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">≡</div>
+                        <div>
+                            <span>Events logged</span>
+                            <strong id="sEvents">0</strong>
+                            <small>All types</small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Student activity</h3>
+                            <p>Most serious first. Open a student to see the timeline.</p>
+                        </div>
+                    </div>
+                    <div id="studentList"></div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="security.js"></script>
+
+</body>
+
+</html>

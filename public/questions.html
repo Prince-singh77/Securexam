@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | Question Bank</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="extra.css">
+</head>
+
+<body class="app-body">
+
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <span class="page-location">Workspace / Question Bank</span>
+                <h2>Question Bank</h2>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="profile">
+                    <div class="avatar" id="avatar">--</div>
+                    <div>
+                        <strong id="userName">Loading...</strong>
+                        <span>Teacher</span>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <section class="dashboard-page stack">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h3 id="formTitle">Add a question</h3>
+                        <p>Multiple choice with one correct answer</p>
+                    </div>
+                </div>
+
+                <div class="tool-row">
+
+                    <div class="tool-field">
+                        <label for="qSubject">Subject / topic</label>
+                        <input id="qSubject" type="text" placeholder="Data Structures" maxlength="40">
+                    </div>
+
+                    <div class="tool-field">
+                        <label for="qMarks">Marks</label>
+                        <input id="qMarks" type="number" min="1" max="10" value="1">
+                    </div>
+
+                    <div class="tool-field wide">
+                        <label for="qText">Question</label>
+                        <textarea id="qText" maxlength="1000" placeholder="Type the question here"></textarea>
+                    </div>
+
+                    <div class="tool-field wide">
+                        <label>Options (tick the correct one)</label>
+                        <div class="option-row"><input type="radio" name="correct" value="0" checked><input type="text" id="qOpt0" placeholder="Option A" maxlength="300"></div>
+                        <div class="option-row"><input type="radio" name="correct" value="1"><input type="text" id="qOpt1" placeholder="Option B" maxlength="300"></div>
+                        <div class="option-row"><input type="radio" name="correct" value="2"><input type="text" id="qOpt2" placeholder="Option C" maxlength="300"></div>
+                        <div class="option-row"><input type="radio" name="correct" value="3"><input type="text" id="qOpt3" placeholder="Option D" maxlength="300"></div>
+                    </div>
+
+                </div>
+
+                <div class="tool-row">
+                    <button class="primary-btn compact" id="saveBtn" onclick="saveQuestion()">Save question</button>
+                    <button class="outline-btn" id="cancelBtn" onclick="cancelEdit()" hidden>Cancel editing</button>
+                </div>
+
+            </div>
+
+            <p id="formMessage" class="form-message"></p>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h3>Your questions</h3>
+                        <p id="countText">Loading...</p>
+                    </div>
+
+                    <div class="tool-field" style="flex: 0 0 200px;">
+                        <select id="filterSubject" onchange="loadQuestions()"></select>
+                    </div>
+                </div>
+
+                <div id="questionList"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="questions.js"></script>
+
+</body>
+
+</html>

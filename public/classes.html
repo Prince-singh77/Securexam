@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | My Classes</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        [hidden] { display: none !important; }
+
+        .stack > * + * { margin-top: 20px; }
+
+        .tool-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-top: 16px; }
+        .tool-field { display: flex; flex-direction: column; gap: 6px; flex: 1 1 180px; }
+        .tool-field label { font-size: 13px; opacity: 0.75; }
+        .tool-field input {
+            padding: 10px 12px; border-radius: 8px; font: inherit; color: inherit;
+            border: 1px solid rgba(128, 128, 128, 0.4); background: transparent;
+        }
+
+        .form-message { margin-top: 12px; font-size: 14px; min-height: 20px; }
+        .form-message.error { color: #d93025; }
+        .form-message.ok { color: #1e8e3e; }
+
+        .code-badge {
+            font-family: monospace; letter-spacing: 1px; padding: 4px 10px; font-size: 13px;
+            border-radius: 999px; border: 1px dashed rgba(128, 128, 128, 0.6);
+            background: transparent; color: inherit; cursor: pointer;
+        }
+
+        .row-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+        .danger-btn {
+            padding: 8px 14px; border-radius: 8px; font: inherit; cursor: pointer;
+            border: 1px solid #d93025; color: #d93025; background: transparent;
+        }
+
+        .empty-note { padding: 20px 4px; opacity: 0.7; }
+    </style>
+</head>
+
+<body class="app-body">
+
+   <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <span class="page-location">Workspace / My Classes</span>
+                <h2>My Classes</h2>
+            </div>
+
+            <div class="topbar-actions">
+
+                <div class="profile">
+
+                    <div class="avatar" id="avatar">--</div>
+
+                    <div>
+                        <strong id="userName">Loading...</strong>
+                        <span id="userRole"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="dashboard-page stack">
+
+            <!-- TEACHERS: CREATE A CLASS -->
+            <div class="panel" id="teacherTools" hidden>
+
+                <div class="panel-header">
+                    <div>
+                        <h3>Create a class</h3>
+                        <p>Students join using the code generated for each class</p>
+                    </div>
+                </div>
+
+                <div class="tool-row">
+
+                    <div class="tool-field">
+                        <label for="className">Class name</label>
+                        <input id="className" type="text" placeholder="Data Structures" maxlength="80">
+                    </div>
+
+                    <div class="tool-field">
+                        <label for="classDepartment">Department</label>
+                        <input id="classDepartment" type="text" placeholder="CSE" maxlength="40">
+                    </div>
+
+                    <div class="tool-field">
+                        <label for="classRoom">Room</label>
+                        <input id="classRoom" type="text" placeholder="Room 204" maxlength="40">
+                    </div>
+
+                    <div class="tool-field">
+                        <label for="classTime">Start time</label>
+                        <input id="classTime" type="time">
+                    </div>
+
+                    <button class="primary-btn compact" onclick="createClass()">
+                        + Create class
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- STUDENTS: JOIN A CLASS -->
+            <div class="panel" id="studentTools" hidden>
+
+                <div class="panel-header">
+                    <div>
+                        <h3>Join a class</h3>
+                        <p>Enter the code your teacher gave you</p>
+                    </div>
+                </div>
+
+                <div class="tool-row">
+
+                    <div class="tool-field">
+                        <label for="joinCode">Join code</label>
+                        <input id="joinCode" type="text" placeholder="A3F9C1" maxlength="10">
+                    </div>
+
+                    <button class="primary-btn compact" onclick="joinClass()">
+                        Join class
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <p id="formMessage" class="form-message"></p>
+
+
+            <!-- THE LIST -->
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h3>Your classes</h3>
+                        <p>Everything you teach or have joined</p>
+                    </div>
+                </div>
+
+                <div class="class-list" id="classList"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+<script src="script.js"></script>
+<script src="sidebar.js"></script>
+<script src="classes.js"></script>
+
+</body>
+
+</html>

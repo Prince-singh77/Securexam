@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | Exams</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="extra.css">
+</head>
+
+<body class="app-body">
+
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <span class="page-location">Workspace / Exams</span>
+                <h2>Exams</h2>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="profile">
+                    <div class="avatar" id="avatar">--</div>
+                    <div>
+                        <strong id="userName">Loading...</strong>
+                        <span>Teacher</span>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <section class="dashboard-page stack">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h3>Create an exam</h3>
+                        <p>Choose a class, set the time, and pick questions from your Question Bank</p>
+                    </div>
+                </div>
+
+                <div class="tool-row">
+
+                    <div class="tool-field">
+                        <label for="examTitle">Exam title</label>
+                        <input id="examTitle" type="text" placeholder="Sessional Examination" maxlength="120">
+                    </div>
+
+                    <div class="tool-field">
+                        <label for="examClass">Class</label>
+                        <select id="examClass"></select>
+                    </div>
+
+                    <div class="tool-field">
+                        <label for="examStart">Starts at</label>
+                        <input id="examStart" type="datetime-local">
+                    </div>
+
+                    <div class="tool-field">
+                        <label for="examDuration">Duration (minutes)</label>
+                        <input id="examDuration" type="number" min="5" max="300" value="60">
+                    </div>
+
+                </div>
+
+                <div class="tool-row">
+
+                    <div class="tool-field wide">
+
+                        <label>Questions</label>
+
+                        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                            <select id="pickSubject" onchange="renderPicker()" style="padding:8px 10px; border-radius:8px; font:inherit; color:inherit; border:1px solid rgba(128,128,128,0.4); background:transparent;"></select>
+                            <span id="pickCount" class="pill">0 selected</span>
+                        </div>
+
+                        <div class="picker" id="picker"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="tool-row">
+                    <button class="primary-btn compact" onclick="createExam()">Create exam (saved as draft)</button>
+                </div>
+
+            </div>
+
+            <p id="formMessage" class="form-message"></p>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h3>Your exams</h3>
+                        <p>Students see an exam only after you publish it</p>
+                    </div>
+                </div>
+
+                <div id="examList"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="exams.js"></script>
+
+</body>
+
+</html>

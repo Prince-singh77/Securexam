@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | Create account</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-brand">
+            <div class="brand-logo">S</div>
+
+            <h1>SecureExam</h1>
+
+            <p>
+                Secure examinations. Smarter classrooms.
+            </p>
+        </div>
+
+
+        <div class="login-card">
+
+            <div class="login-heading">
+
+                <span class="eyebrow">
+                    NEW ACCOUNT
+                </span>
+
+                <h2>Create your account</h2>
+
+                <p>
+                    Students can sign up directly. Teachers need an invite code.
+                </p>
+
+            </div>
+
+
+            <label>Full name</label>
+
+            <input
+                type="text"
+                id="regName"
+                placeholder="Enter your full name"
+                maxlength="80"
+            >
+
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="regEmail"
+                placeholder="Enter your email"
+            >
+
+
+            <label>Password (at least 8 characters)</label>
+
+            <input
+                type="password"
+                id="regPassword"
+                placeholder="Choose a password"
+            >
+
+
+            <label>I am a</label>
+
+            <select id="regRole" onchange="toggleCode()">
+
+                <option value="student">
+                    Student
+                </option>
+
+                <option value="teacher">
+                    Teacher
+                </option>
+
+            </select>
+
+
+            <div id="codeBox" hidden>
+
+                <label>Teacher invite code</label>
+
+                <input
+                    type="password"
+                    id="regCode"
+                    placeholder="Ask your institution for the code"
+                >
+
+            </div>
+
+
+            <button
+                class="primary-btn"
+                onclick="register()"
+            >
+                Create account →
+            </button>
+
+
+            <p id="message" class="login-message"></p>
+
+
+            <p style="text-align:center; margin-top:14px;">
+                Already have an account?
+                <a href="index.html">Sign in</a>
+            </p>
+
+        </div>
+
+
+        <p class="login-footer">
+            SecureExam • 2026
+        </p>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script src="register.js"></script>
+
+</body>
+
+</html>

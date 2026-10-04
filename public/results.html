@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SecureExam | Results</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="extra.css">
+</head>
+
+<body class="app-body">
+
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <span class="page-location">Insights / Results</span>
+                <h2>Results</h2>
+            </div>
+
+            <div class="topbar-actions">
+                <div class="profile">
+                    <div class="avatar" id="avatar">--</div>
+                    <div>
+                        <strong id="userName">Loading...</strong>
+                        <span>Teacher</span>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <section class="dashboard-page stack">
+
+            <div class="panel">
+                <div class="toolbar">
+                    <select id="examSelect" onchange="loadResults()"></select>
+                    <button class="outline-btn" onclick="downloadCsv()">Export CSV</button>
+                </div>
+            </div>
+
+            <p id="formMessage" class="form-message"></p>
+
+            <div id="reportArea" class="stack" hidden>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">♙</div>
+                        <div>
+                            <span>Submitted</span>
+                            <strong id="rSubmitted">0</strong>
+                            <small id="rSubmittedNote"></small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">%</div>
+                        <div>
+                            <span>Average</span>
+                            <strong id="rAverage">--</strong>
+                            <small id="rAverageNote"></small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">↑</div>
+                        <div>
+                            <span>Highest / Lowest</span>
+                            <strong id="rRange">--</strong>
+                            <small id="rRangeNote"></small>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">✓</div>
+                        <div>
+                            <span>Passed</span>
+                            <strong id="rPassed">--</strong>
+                            <small id="rPassedNote"></small>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Score distribution</h3>
+                            <p>Number of students in each score range</p>
+                        </div>
+                    </div>
+                    <div id="distribution"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Students</h3>
+                            <p>Everyone enrolled in the class</p>
+                        </div>
+                    </div>
+                    <div class="table-scroll" id="studentTable"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Question analysis</h3>
+                            <p>Share of submitted students who answered each question correctly</p>
+                        </div>
+                    </div>
+                    <div id="questionStats"></div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script src="sidebar.js"></script>
+    <script src="results.js"></script>
+
+</body>
+
+</html>
